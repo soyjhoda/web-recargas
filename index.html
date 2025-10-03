@@ -4,6 +4,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Recargas Tryhards</title>
+
+<!-- Google Fonts Open Sans -->
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
+
 <link rel="stylesheet" href="styles.css" />
 <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
@@ -31,45 +35,116 @@
     <p>FÁCIL, RÁPIDO Y SEGURO</p>
     <p>Tu tienda de confianza para monedas y artículos de videojuegos. <strong>Especialistas en FC Mobile, Roblox, Call of Duty y Free Fire.</strong></p>
     <div class="hero-buttons">
-        <button onclick="document.getElementById('categorias').scrollIntoView({behavior:'smooth'})" class="btn-primary">Explorar Productos</button>
+        <button onclick="document.getElementById('ofertas').scrollIntoView({behavior:'smooth'})" class="btn-primary">Ver Ofertas</button>
         <button onclick="window.open('https://wa.me/584127442672', '_blank')" class="btn-secondary">Chatear por WhatsApp</button>
+    </div>
+
+    <div class="redes-sociales-titulo">Síguenos</div>
+
+    <div class="redes-sociales">
+        <a href="https://www.tiktok.com/@soyjhodagaming" target="_blank" rel="noopener" aria-label="TikTok" class="btn-social" title="Síguenos en TikTok">
+            <img src="images/tiktok.png" alt="Logotipo de TikTok" />
+        </a>
+        <a href="https://www.youtube.com/@Soyjhoda" target="_blank" rel="noopener" aria-label="YouTube" class="btn-social" title="Síguenos en YouTube">
+            <img src="images/youtube.png" alt="Logotipo de YouTube" />
+        </a>
+        <a href="https://kick.com/soyjhoda" target="_blank" rel="noopener" aria-label="Kick" class="btn-social" title="Síguenos en Kick">
+            <img src="images/kick.png" alt="Logotipo de Kick" />
+        </a>
     </div>
 </section>
 
 <main>
-    <section id="categorias" class="categorias">
-        <h3>Nuestras Categorías</h3>
-        <p>Selecciona un juego para ver todos los paquetes disponibles.</p>
-        <div class="cards-container">
-            <div class="card">
-                <img src="images/fc-mobile.png" alt="FC Mobile" />
-                <h4>FC Mobile</h4>
-                <p>FC Points, Pase Estelar, Refuerzos diarios.</p>
+    <!-- Ofertas destacadas con imagen placeholder -->
+    <section id="ofertas" class="ofertas marco-gamer">
+        <h3>Ofertas Destacadas</h3>
+        <div class="ofertas-lista">
+            <div class="oferta-item">
+                <img src="images/oferta-fcmobile.png" alt="Oferta FC Mobile" />
+                <p>Paquete especial FC Mobile con descuento.</p>
             </div>
-            <div class="card">
-                <img src="images/roblox.png" alt="Roblox" />
-                <h4>Roblox</h4>
-                <p>Robux y paquetes con bonus.</p>
+            <div class="oferta-item">
+                <img src="images/oferta-roblox.png" alt="Oferta Roblox" />
+                <p>Robux con bonus hasta 20% extra.</p>
             </div>
-            <div class="card">
-                <img src="images/free-fire.png" alt="Free Fire" />
-                <h4>Free Fire</h4>
-                <p>Diamantes para todas las necesidades.</p>
-            </div>
-            <div class="card">
-                <img src="images/cod.png" alt="Call of Duty" />
-                <h4>Call of Duty</h4>
-                <p>CP y paquetes con bonus.</p>
-            </div>
-            <div class="card">
-                <img src="images/delta-force.png" alt="Delta Force" />
-                <h4>Delta Force</h4>
-                <p>Paquetes y recargas especiales.</p>
+            <div class="oferta-item">
+                <img src="images/oferta-freefire.png" alt="Oferta Free Fire" />
+                <p>Diamantes para Free Fire a precio especial.</p>
             </div>
         </div>
     </section>
 
-    <section class="pagos-paises">
+    <!-- Reseñas con carrusel y imágenes -->
+    <section id="reseñas" class="reseñas marco-gamer">
+        <h3>Reseñas de Clientes</h3>
+        <div class="swiper-container swiper-reseñas">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide reseña-slide">
+                    <img src="images/reseña1.jpg" alt="Juan - Venezuela" loading="lazy" />
+                    <p>"Muy buen servicio y entrega rápida. Totalmente recomendado."</p>
+                    <h5>Juan - Venezuela</h5>
+                </div>
+                <div class="swiper-slide reseña-slide">
+                    <img src="images/reseña2.jpg" alt="PerezTRYH - Venezuela" loading="lazy" />
+                    <p>"Gracias por el pase jhoda, excelente."</p>
+                    <h5>PerezTRYH - Venezuela</h5>
+                </div>
+                <div class="swiper-slide reseña-slide">
+                    <img src="images/reseña3.png" alt="Carlos - Perú" loading="lazy" />
+                    <p>"Atención personalizada y confiable. Volveré a comprar seguro."</p>
+                    <h5>Carlos - Perú</h5>
+                </div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- Categorías con carrusel horizontal -->
+    <section id="categorias" class="categorias">
+        <h3>Nuestras Categorías</h3>
+        <p>Selecciona un juego para ver todos los paquetes disponibles.</p>
+        <div class="swiper-container swiper-categorias">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide card">
+                    <img src="images/fc-mobile.png" alt="FC Mobile" loading="lazy" />
+                    <h4>FC Mobile</h4>
+                    <p>FC Points, Pase Estelar, Refuerzos diarios.</p>
+                </div>
+                <div class="swiper-slide card">
+                    <img src="images/roblox.png" alt="Roblox" loading="lazy" />
+                    <h4>Roblox</h4>
+                    <p>Robux y paquetes con bonus.</p>
+                </div>
+                <div class="swiper-slide card">
+                    <img src="images/free-fire.png" alt="Free Fire" loading="lazy" />
+                    <h4>Free Fire</h4>
+                    <p>Diamantes para todas las necesidades.</p>
+                </div>
+                <div class="swiper-slide card">
+                    <img src="images/cod.png" alt="Call of Duty" loading="lazy" />
+                    <h4>Call of Duty</h4>
+                    <p>CP y paquetes con bonus.</p>
+                </div>
+                <div class="swiper-slide card">
+                    <img src="images/delta-force.png" alt="Delta Force" loading="lazy" />
+                    <h4>Delta Force</h4>
+                    <p>Paquetes y recargas especiales.</p>
+                </div>
+                <div class="swiper-slide card">
+                    <img src="images/tarjetas-regalo.png" alt="Tarjetas de regalo" loading="lazy" />
+                    <h4>Tarjetas de regalo</h4>
+                    <p>Netflix, Amazon, Steam, y más.</p>
+                </div>
+            </div>
+            <div class="swiper-button-prev swiper-prev-cat"></div>
+            <div class="swiper-button-next swiper-next-cat"></div>
+        </div>
+    </section>
+
+    <!-- Métodos de pago y países -->
+    <section class="pagos-paises marco-gamer">
         <div class="metodos-pago">
             <h4>Métodos de Pago Disponibles</h4>
             <p>Aceptamos múltiples formas de pago para tu comodidad y seguridad.</p>
@@ -102,37 +177,6 @@
             </ul>
         </div>
     </section>
-
-    <section class="ofertas">
-        <h3>Ofertas Destacadas</h3>
-        <div class="ofertas-lista">
-            <p>No hay ofertas activas por ahora.</p>
-        </div>
-    </section>
-
-    <section class="reseñas">
-        <h3>Reseñas de Clientes</h3>
-        <!-- Carrusel Swiper -->
-        <div class="swiper-container">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <p>"Muy buen servicio y entrega rápida. Totalmente recomendado."</p>
-                    <h5>Juan - Venezuela</h5>
-                </div>
-                <div class="swiper-slide">
-                    <p>"Recargas Tryhards me ayudó con todo en Free Fire, excelente."</p>
-                    <h5>Sofía - Colombia</h5>
-                </div>
-                <div class="swiper-slide">
-                    <p>"Atención personalizada y confiable. Volveré a comprar seguro."</p>
-                    <h5>Carlos - Perú</h5>
-                </div>
-            </div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-pagination"></div>
-        </div>
-    </section>
 </main>
 
 <footer>
@@ -145,6 +189,21 @@
                 <span>Entrega inmediata</span>
                 <span>Soporte 24/7</span>
             </div>
+
+            <div class="footer-redes-sociales">
+                <div class="redes-sociales-titulo">Nuestras Redes Sociales</div>
+                <div class="redes-sociales">
+                    <a href="https://www.tiktok.com/@soyjhodagaming" target="_blank" rel="noopener" aria-label="TikTok" class="btn-social" title="Síguenos en TikTok">
+                        <img src="images/tiktok.png" alt="Logotipo de TikTok" />
+                    </a>
+                    <a href="https://www.youtube.com/@Soyjhoda" target="_blank" rel="noopener" aria-label="YouTube" class="btn-social" title="Síguenos en YouTube">
+                        <img src="images/youtube.png" alt="Logotipo de YouTube" />
+                    </a>
+                    <a href="https://kick.com/soyjhoda" target="_blank" rel="noopener" aria-label="Kick" class="btn-social" title="Síguenos en Kick">
+                        <img src="images/kick.png" alt="Logotipo de Kick" />
+                    </a>
+                </div>
+            </div>
         </div>
         <div>
             <h5>Juegos</h5>
@@ -154,10 +213,12 @@
                 <li>Roblox</li>
                 <li>Call of Duty</li>
                 <li>Delta Force</li>
+                <li>Tarjetas de regalo</li>
             </ul>
         </div>
         <div>
             <h5>Contacto</h5>
+            <p>Creado Por: Jose Daniel Marin</p>
             <p>WhatsApp: +58 412 744 2672</p>
             <p>© 2025 Recargas Tryhards. Todos los derechos reservados.</p>
         </div>
@@ -165,8 +226,10 @@
 </footer>
 
 <script src="script.js"></script>
+
 <script>
-    const swiper = new Swiper('.swiper-container', {
+    // Swiper para reseñas
+    const swiperReseñas = new Swiper('.swiper-reseñas', {
         slidesPerView: 1,
         loop: true,
         navigation: {
@@ -177,6 +240,22 @@
             el: '.swiper-pagination',
             clickable: true,
         },
+    });
+
+    // Swiper para categorías
+    const swiperCategorias = new Swiper('.swiper-categorias', {
+        slidesPerView: 3,
+        spaceBetween: 20,
+        navigation: {
+            nextEl: '.swiper-next-cat',
+            prevEl: '.swiper-prev-cat',
+        },
+        breakpoints: {
+            320: { slidesPerView: 1 },
+            640: { slidesPerView: 2 },
+            900: { slidesPerView: 3 },
+            1200: { slidesPerView: 4 }
+        }
     });
 
     function abrirWhatsApp(mensaje) {
