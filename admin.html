@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Panel Admin - Gestión de Paquetes</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 20px; }
+      h1 { color: #333; }
+      ul { list-style: none; padding: 0; }
+      li { margin-bottom: 8px; }
+      button { margin-left: 8px; }
+      label, input { display: block; margin-top: 8px; }
+      input, select { padding: 5px; width: 300px; max-width: 100%; }
+      form { margin-bottom: 20px; padding: 10px; border: 1px solid #ccc; border-radius: 6px; width: 320px;}
+    </style>
+</head>
+<body>
+    <h1>Panel Admin - Gestión de Paquetes</h1>
+
+    <form id="form-paquete">
+        <h3>Agregar o Editar Paquete</h3>
+        <input type="hidden" id="paquete-id" value="" />
+        <label for="juego_id">ID del Juego:</label>
+        <input type="number" id="juego_id" min="1" required />
+
+        <label for="nombre">Nombre del Paquete:</label>
+        <input type="text" id="nombre" required />
+
+        <label for="descripcion">Descripción:</label>
+        <input type="text" id="descripcion" />
+
+        <label for="precio">Precio:</label>
+        <input type="number" id="precio" step="0.01" min="0" required />
+
+        <button type="submit">Guardar Paquete</button>
+        <button type="button" id="cancelar-edicion" style="display:none;">Cancelar Edición</button>
+    </form>
+
+    <ul id="lista-paquetes"></ul>
+
+    <script type="module">
+        import { supabase } from './supabase.js';
+
+        const lista = document.getElementById('lista-paquetes');
+        const form = document.getElementById('form-paquete');
+        const inputId = document.getElementById('paquete-id');
+        const inputJuegoId = document.getElementById('juego_id');
+        const inputNombre = document.getElementById('nombre');
+        const inputDescripcion = document.getElementById('descripcion');
+        const inputPrecio = document.getElementById('precio');
+        const btnCancelar = document.getElementById('cancelar-edicion');
+
+        let editando = false;
+
+        async function cargarPaquetes() {
+            const { data, error } = await supabase.from('paquetes').select('*').order('id', { ascending: true });
+            if (error) {
+                alert('Error al cargar paquetes');
+                console.error(error);
+                return;
+            }
+
+            lista.innerHTML = '';
+            data.forEach(paquete => {
+                const li = document.createElement('li');
+                li.textContent = `${paquete.nombre} (Juego ID: ${paquete.juego_id}) - Precio: $${paquete.precio.toFixed(2)}`;
+                
+                const btnEditar = document.createElement('button');
+                btnEditar.textContent = 'Editar';
+                btnEditar.onclick = () => editarPaquete(paquete);
+
+                const btnEliminar = document.createElement('button');
+                btnEliminar.textContent = 'Eliminar';
+                btnEliminar.onclick = () => eliminarPaquete(paquete.id);
+
+                li.appendChild(btnEditar);
+                li.appendChild(btnEliminar);
+                lista.appendChild(li);
+            });
+        }
+
+        async function agregarPaquete(paquete) {
+            const { data, error } = await supabase.from('paquetes').insert([paquete]);
+            if (error) {
+                alert('Error al agregar paquete');
+                console.error(error);
+                return false;
+            }
+            return true;
+        }
+
+        async function actualizarPaquete(id, paquete) {
+            const { data, error } = await supabase.from('paquetes').update(paquete).eq('id', id);
+            if (error) {
+                alert('Error al actualizar paquete');
+                console.error(error);
+                return false;
+            }
+            return true;
+        }
+
+        async function eliminarPaquete(id) {
+            if (!confirm('¿Seguro quieres eliminar este paquete?')) return;
+            const { error } = await supabase.from('paquetes').delete().eq('id', id);
+            if (error) {
+                alert('Error al eliminar paquete');
+                console.error(error);
+                return;
+            }
+            cargarPaquetes();
+        }
+
+        function editarPaquete(paquete) {
+            editando = true;
+            inputId.value = paquete.id;
+            inputJuegoId.value = paquete.juego_id;
+            inputNombre.value = paquete.nombre;
+            inputDescripcion.value = paquete.descripcion || '';
+            inputPrecio.value = paquete.precio;
+            btnCancelar.style.display = 'inline';
+        }
+
+        function limpiarFormulario() {
+            editando = false;
+            inputId.value = '';
+            inputJuegoId.value = '';
+            inputNombre.value = '';
+            inputDescripcion.value = '';
+            inputPrecio.value = '';
+            btnCancelar.style.display = 'none';
+        }
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const paquete = {
+                juego_id: Number(inputJuegoId.value),
+                nombre: inputNombre.value.trim(),
+                descripcion: inputDescripcion.value.trim(),
+                precio: parseFloat(inputPrecio.value)
+            };
+
+            if (!paquete.nombre || !paquete.juego_id || isNaN(paquete.precio)) {
+                alert('Por favor llena todos los campos obligatorios correctamente.');
+                return;
+            }
+
+            if (editando) {
+                const id = Number(inputId.value);
+                const success = await actualizarPaquete(id, paquete);
+                if(success) {
+                    alert('Paquete actualizado');
+                    limpiarFormulario();
+                    cargarPaquetes();
+                }
+            } else {
+                const success = await agregarPaquete(paquete);
+                if(success) {
+                    alert('Paquete agregado');
+                    limpiarFormulario();
+                    cargarPaquetes();
+                }
+            }
+        });
+
+        btnCancelar.addEventListener('click', () => {
+            limpiarFormulario();
+        });
+
+        cargarPaquetes();
+    </script>
+</body>
+</html>
