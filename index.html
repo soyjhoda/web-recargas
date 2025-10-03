@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Recargas Tryhards</title>
+<link rel="stylesheet" href="styles.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+</head>
+<body>
+<header class="header-top">
+    <div class="header-left">
+        <img src="logo.png" alt="Recargas Tryhards" id="logo" />
+        <div class="header-logo-text">
+            <h1>Recargas Tryhards</h1>
+            <p>Fácil, Rápido y Seguro</p>
+        </div>
+    </div>
+    <div class="header-right">
+        <button class="btn-menu" onclick="alert('Métodos de pago próximamente')">Métodos de Pago</button>
+        <button class="btn-menu">
+            <span>Carrito</span> <span id="carrito-count">0</span>
+        </button>
+        <button class="btn-whatsapp" onclick="window.open('https://wa.me/584127442672', '_blank')">WhatsApp</button>
+    </div>
+</header>
+
+<section class="hero-banner">
+    <h2>RECARGAS TRYHARDS</h2>
+    <p>FÁCIL, RÁPIDO Y SEGURO</p>
+    <p>Tu tienda de confianza para monedas y artículos de videojuegos. <strong>Especialistas en FC Mobile, Roblox, Call of Duty y Free Fire.</strong></p>
+    <div class="hero-buttons">
+        <button onclick="document.getElementById('categorias').scrollIntoView({behavior:'smooth'})" class="btn-primary">Explorar Productos</button>
+        <button onclick="window.open('https://wa.me/584127442672', '_blank')" class="btn-secondary">Chatear por WhatsApp</button>
+    </div>
+</section>
+
+<main>
+    <section id="categorias" class="categorias">
+        <h3>Nuestras Categorías</h3>
+        <p>Selecciona un juego para ver todos los paquetes disponibles.</p>
+        <div class="cards-container">
+            <div class="card">
+                <img src="images/fc-mobile.png" alt="FC Mobile" />
+                <h4>FC Mobile</h4>
+                <p>FC Points, Pase Estelar, Refuerzos diarios.</p>
+            </div>
+            <div class="card">
+                <img src="images/roblox.png" alt="Roblox" />
+                <h4>Roblox</h4>
+                <p>Robux y paquetes con bonus.</p>
+            </div>
+            <div class="card">
+                <img src="images/free-fire.png" alt="Free Fire" />
+                <h4>Free Fire</h4>
+                <p>Diamantes para todas las necesidades.</p>
+            </div>
+            <div class="card">
+                <img src="images/cod.png" alt="Call of Duty" />
+                <h4>Call of Duty</h4>
+                <p>CP y paquetes con bonus.</p>
+            </div>
+            <div class="card">
+                <img src="images/delta-force.png" alt="Delta Force" />
+                <h4>Delta Force</h4>
+                <p>Paquetes y recargas especiales.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="pagos-paises">
+        <div class="metodos-pago">
+            <h4>Métodos de Pago Disponibles</h4>
+            <p>Aceptamos múltiples formas de pago para tu comodidad y seguridad.</p>
+            <div class="metodos-lista">
+                <button onclick="abrirWhatsApp('Hola, quiero consultar más métodos de pago')">Consulta método de tu país</button>
+                <button>PayPal</button>
+                <button>QR</button>
+                <button>Binance</button>
+                <button>Zelle</button>
+                <button>Transferencia Bancaria</button>
+                <button>Pago Móvil</button>
+                <button>Yape</button>
+            </div>
+        </div>
+
+        <div class="paises-recarga">
+            <h4>Países donde Recargamos</h4>
+            <p>Brindamos servicio en los siguientes países</p>
+            <ul>
+                <li>Venezuela</li>
+                <li>Bolivia</li>
+                <li>Argentina</li>
+                <li>Honduras</li>
+                <li>Guatemala</li>
+                <li>Chile</li>
+                <li>Perú</li>
+                <li>Colombia</li>
+                <li>Panamá</li>
+                <li><button onclick="abrirWhatsApp('Hola, quiero consultar sobre recargas en mi país')">Consulta tu país</button></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="ofertas">
+        <h3>Ofertas Destacadas</h3>
+        <div class="ofertas-lista">
+            <p>No hay ofertas activas por ahora.</p>
+        </div>
+    </section>
+
+    <section class="reseñas">
+        <h3>Reseñas de Clientes</h3>
+        <!-- Carrusel Swiper -->
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <p>"Muy buen servicio y entrega rápida. Totalmente recomendado."</p>
+                    <h5>Juan - Venezuela</h5>
+                </div>
+                <div class="swiper-slide">
+                    <p>"Recargas Tryhards me ayudó con todo en Free Fire, excelente."</p>
+                    <h5>Sofía - Colombia</h5>
+                </div>
+                <div class="swiper-slide">
+                    <p>"Atención personalizada y confiable. Volveré a comprar seguro."</p>
+                    <h5>Carlos - Perú</h5>
+                </div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div>
+            <h5>Recargas Tryhards</h5>
+            <p>Especialistas en monedas y artículos de videojuegos. Entrega inmediata y soporte 24/7.</p>
+            <div class="info-tags">
+                <span>100% Seguro</span>
+                <span>Entrega inmediata</span>
+                <span>Soporte 24/7</span>
+            </div>
+        </div>
+        <div>
+            <h5>Juegos</h5>
+            <ul>
+                <li>FC Mobile</li>
+                <li>Free Fire</li>
+                <li>Roblox</li>
+                <li>Call of Duty</li>
+                <li>Delta Force</li>
+            </ul>
+        </div>
+        <div>
+            <h5>Contacto</h5>
+            <p>WhatsApp: +58 412 744 2672</p>
+            <p>© 2025 Recargas Tryhards. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+<script>
+    const swiper = new Swiper('.swiper-container', {
+        slidesPerView: 1,
+        loop: true,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+    });
+
+    function abrirWhatsApp(mensaje) {
+        const telefono = "584127442672"; // Cambia aquí por tu número sin signos ni espacios
+        const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+        window.open(url, '_blank');
+    }
+</script>
+</body>
+</html>
