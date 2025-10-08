@@ -90,17 +90,17 @@
       </div>
     </section>
 
-    <!-- Reseñas con carrusel y imágenes -->
+    <!-- Reseñas con carrusel dinámico -->
     <section id="reseñas" class="reseñas marco-gamer">
-        <h3>Reseñas de Clientes</h3>
-        <div class="swiper-container swiper-reseñas">
-            <div class="swiper-wrapper" id="reseñas-wrapper">
-                <!-- aquí se cargan dinámicamente las reseñas -->
-            </div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-pagination"></div>
+      <h3>Reseñas de Clientes</h3>
+      <div class="swiper-container swiper-reseñas">
+        <div class="swiper-wrapper" id="reseñas-wrapper">
+          <!-- Reseñas se cargarán aquí dinámicamente -->
         </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-pagination"></div>
+      </div>
     </section>
 
     <!-- Categorías con carrusel horizontal -->
@@ -233,22 +233,69 @@
     import { supabase } from './supabase.js';
 
     // Swiper para reseñas
-    const swiperReseñas = new Swiper('.swiper-reseñas', {
-        slidesPerView: 1,
-        loop: true,
-        autoplay: {
-            delay: 3000,
-            disableOnInteraction: false,
-        },
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true,
-        },
-    });
+    let swiperReseñas;
+
+    async function cargarReseñas() {
+        const wrapperReseñas = document.getElementById('reseñas-wrapper');
+        const { data, error } = await supabase
+            .from('resenas')
+            .select('*')
+            .order('creado_en', { ascending: false });
+        if (error) {
+            console.error('Error cargando reseñas:', error);
+            return;
+        }
+        wrapperReseñas.innerHTML = '';
+
+        data.forEach(resena => {
+            const slide = document.createElement('div');
+            slide.classList.add('swiper-slide', 'reseña-slide');
+            slide.innerHTML = `
+                <img src="${resena.imagen}" alt="${resena.nombre} - ${resena.pais}" loading="lazy" />
+                <p>"${resena.comentario}"</p>
+                <h5>${resena.nombre} - ${resena.pais}</h5>
+            `;
+            wrapperReseñas.appendChild(slide);
+        });
+
+        if (swiperReseñas) {
+            swiperReseñas.destroy(true, true);
+        }
+
+        const width = window.innerWidth;
+        let slidesView = 1;
+        if (width >= 1200) slidesView = 4;
+        else if (width >= 900) slidesView = 3;
+        else if (width >= 640) slidesView = 2;
+
+        const canLoop = data.length >= slidesView + 1;
+
+        swiperReseñas = new Swiper('.swiper-reseñas', {
+            slidesPerView: slidesView,
+            spaceBetween: 26,
+            loop: canLoop,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                320: { slidesPerView: 1 },
+                640: { slidesPerView: 2 },
+                900: { slidesPerView: 3 },
+                1200: { slidesPerView: 4 },
+            },
+        });
+    }
+
+    cargarReseñas();
 
     // Swiper para categorías
     const swiperCategorias = new Swiper('.swiper-categorias', {
@@ -270,47 +317,47 @@
     const ofertasWrapper = document.getElementById('ofertas-wrapper');
 
     async function cargarOfertas() {
-      const { data, error } = await supabase
-        .from('ofertas_destacadas') // Cambia este nombre por el correcto de tu tabla en supabase
-        .select('*')
-        .order('creado_en', { ascending: false });
+        const { data, error } = await supabase
+            .from('ofertas_destacadas')
+            .select('*')
+            .order('creado_en', { ascending: false });
 
-      if (error) {
-        console.error('Error cargando ofertas:', error);
-        return;
-      }
-
-      ofertasWrapper.innerHTML = ''; // Limpiar nodo
-
-      data.forEach(oferta => {
-        const slide = document.createElement('div');
-        slide.classList.add('swiper-slide', 'oferta-item');
-        slide.innerHTML = `
-          <img src="${oferta.imagen}" alt="${oferta.nombre}" loading="lazy" />
-          <p>${oferta.descripcion}</p>
-        `;
-        ofertasWrapper.appendChild(slide);
-      });
-
-      new Swiper('.swiper-ofertas', {
-        slidesPerView: 3,
-        spaceBetween: 20,
-        loop: true,
-        autoplay: {
-          delay: 3000,
-          disableOnInteraction: false,
-        },
-        navigation: {
-          nextEl: '.swiper-next-ofertas',
-          prevEl: '.swiper-prev-ofertas',
-        },
-        breakpoints: {
-          320: { slidesPerView: 1 },
-          640: { slidesPerView: 2 },
-          900: { slidesPerView: 3 },
-          1200: { slidesPerView: 4 }
+        if (error) {
+            console.error('Error cargando ofertas:', error);
+            return;
         }
-      });
+
+        ofertasWrapper.innerHTML = '';
+
+        data.forEach(oferta => {
+            const slide = document.createElement('div');
+            slide.classList.add('swiper-slide', 'oferta-item');
+            slide.innerHTML = `
+                <img src="${oferta.imagen}" alt="${oferta.nombre}" loading="lazy" />
+                <p>${oferta.descripcion}</p>
+            `;
+            ofertasWrapper.appendChild(slide);
+        });
+
+        new Swiper('.swiper-ofertas', {
+            slidesPerView: 3,
+            spaceBetween: 20,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: '.swiper-next-ofertas',
+                prevEl: '.swiper-prev-ofertas',
+            },
+            breakpoints: {
+                320: { slidesPerView: 1 },
+                640: { slidesPerView: 2 },
+                900: { slidesPerView: 3 },
+                1200: { slidesPerView: 4 }
+            }
+        });
     }
 
     cargarOfertas();
@@ -335,48 +382,18 @@
             }
         });
     });
-
-    const wrapperReseñas = document.getElementById('reseñas-wrapper');
-
-    async function cargarReseñas() {
-        const { data, error } = await supabase
-            .from('resenas')
-            .select('*')
-            .order('creado_en', { ascending: false });
-        if (error) {
-            console.error('Error cargando reseñas:', error);
-            return;
-        }
-
-        wrapperReseñas.innerHTML = '';
-
-        data.forEach(resena => {
-            const slide = document.createElement('div');
-            slide.classList.add('swiper-slide', 'reseña-slide');
-            slide.innerHTML = `
-                <img src="${resena.imagen}" alt="${resena.nombre} - ${resena.pais}" loading="lazy" />
-                <p>"${resena.comentario}"</p>
-                <h5>${resena.nombre} - ${resena.pais}</h5>
-            `;
-            wrapperReseñas.appendChild(slide);
-        });
-
-        swiperReseñas.update();
-        swiperReseñas.autoplay.start();
-    }
-
-    cargarReseñas();
 </script>
 
 <script>
-  function actualizarContadorCarrito() {
-    const carrito = localStorage.getItem('carrito');
-    const productos = carrito ? JSON.parse(carrito) : [];
-    const totalCantidad = productos.reduce((total, item) => total + item.cantidad, 0);
-    document.getElementById('carrito-count').textContent = totalCantidad;
-  }
+    function actualizarContadorCarrito() {
+        const carrito = localStorage.getItem('carrito');
+        const productos = carrito ? JSON.parse(carrito) : [];
+        const totalCantidad = productos.reduce((total, item) => total + item.cantidad, 0);
+        document.getElementById('carrito-count').textContent = totalCantidad;
+    }
 
-  window.addEventListener('load', actualizarContadorCarrito);
+    window.addEventListener('load', actualizarContadorCarrito);
 </script>
+
 </body>
 </html>

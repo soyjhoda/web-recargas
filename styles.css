@@ -188,22 +188,67 @@ body {
     align-items: center;
 }
 
+/* Mejora profesional para tarjetas de reseñas Swiper */
 .reseña-slide {
+    background: #292b2f;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(230, 126, 34, 0.09);
     text-align: center;
-    max-width: 350px;
-    margin: 0 auto;
-    color: white;
+    margin-right: 26px;
+    padding: 18px 12px 14px 12px;
+    min-width: 210px;
+    max-width: 340px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.2s;
+}
+
+.reseña-slide:last-child {
+    margin-right: 0;
 }
 
 .reseña-slide img {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 10px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     object-fit: cover;
+    box-shadow: 0 2px 8px rgba(230,126,34,0.08);
+    margin-bottom: 11px;
+    background: #222;
+    border: 2.5px solid #e67e22;
+}
+
+.reseña-slide p {
+    font-size: 1.03rem;
+    color: #ffd27b;
+    margin-bottom: 4px;
+    margin-top: 8px;
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+.reseña-slide h5 {
+    font-size: 0.99rem;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 0px;
+}
+
+/* Responsive para reseñas en móviles */
+@media (max-width: 900px) {
+    .reseña-slide {
+        min-width: 97vw;
+        max-width: 99vw;
+        margin-right: 8px;
+        padding: 14px 6px 10px 6px;
+    }
+    .reseña-slide img {
+        width: 82px;
+        height: 82px;
+        margin-bottom: 8px;
+    }
 }
 
 .categorias {
