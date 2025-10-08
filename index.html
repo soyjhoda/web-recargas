@@ -78,23 +78,16 @@
 </section>
 
 <main>
-    <!-- Ofertas destacadas con imagen placeholder -->
+    <!-- Ofertas destacadas con carrusel dinámico -->
     <section id="ofertas" class="ofertas marco-gamer">
-        <h3>Ofertas Destacadas</h3>
-        <div class="ofertas-lista">
-            <div class="oferta-item">
-                <img src="images/oferta-fcmobile.png" alt="Oferta FC Mobile" />
-                <p>Paquete especial FC Mobile con descuento.</p>
-            </div>
-            <div class="oferta-item">
-                <img src="images/oferta-roblox.png" alt="Oferta Roblox" />
-                <p>Robux con bonus hasta 20% extra.</p>
-            </div>
-            <div class="oferta-item">
-                <img src="images/oferta-freefire.png" alt="Oferta Free Fire" />
-                <p>Diamantes para Free Fire a precio especial.</p>
-            </div>
+      <h3>Ofertas Destacadas</h3>
+      <div class="swiper-container swiper-ofertas">
+        <div class="swiper-wrapper" id="ofertas-wrapper">
+          <!-- Ofertas se cargan aquí dinámicamente -->
         </div>
+        <div class="swiper-button-prev swiper-prev-ofertas"></div>
+        <div class="swiper-button-next swiper-next-ofertas"></div>
+      </div>
     </section>
 
     <!-- Reseñas con carrusel y imágenes -->
@@ -273,6 +266,55 @@
         }
     });
 
+    // Carga dinámica y carrusel con autoplay loop para Ofertas Destacadas
+    const ofertasWrapper = document.getElementById('ofertas-wrapper');
+
+    async function cargarOfertas() {
+      const { data, error } = await supabase
+        .from('ofertas_destacadas') // Cambia este nombre por el correcto de tu tabla en supabase
+        .select('*')
+        .order('creado_en', { ascending: false });
+
+      if (error) {
+        console.error('Error cargando ofertas:', error);
+        return;
+      }
+
+      ofertasWrapper.innerHTML = ''; // Limpiar nodo
+
+      data.forEach(oferta => {
+        const slide = document.createElement('div');
+        slide.classList.add('swiper-slide', 'oferta-item');
+        slide.innerHTML = `
+          <img src="${oferta.imagen}" alt="${oferta.nombre}" loading="lazy" />
+          <p>${oferta.descripcion}</p>
+        `;
+        ofertasWrapper.appendChild(slide);
+      });
+
+      new Swiper('.swiper-ofertas', {
+        slidesPerView: 3,
+        spaceBetween: 20,
+        loop: true,
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        navigation: {
+          nextEl: '.swiper-next-ofertas',
+          prevEl: '.swiper-prev-ofertas',
+        },
+        breakpoints: {
+          320: { slidesPerView: 1 },
+          640: { slidesPerView: 2 },
+          900: { slidesPerView: 3 },
+          1200: { slidesPerView: 4 }
+        }
+      });
+    }
+
+    cargarOfertas();
+
     function abrirWhatsApp(mensaje) {
         const telefono = "584127442672";
         const url = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
@@ -336,6 +378,5 @@
 
   window.addEventListener('load', actualizarContadorCarrito);
 </script>
-
 </body>
 </html>
