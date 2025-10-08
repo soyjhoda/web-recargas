@@ -46,9 +46,9 @@
     </div>
     <div class="header-right">
         <button class="btn-menu" onclick="alert('Métodos de pago próximamente')">Métodos de Pago</button>
-        <button class="btn-menu">
+        <a href="carrito.html" class="btn-menu" style="text-decoration:none; color:inherit;">
             <span>Carrito</span> <span id="carrito-count">0</span>
-        </button>
+        </a>
         <button class="btn-whatsapp" onclick="window.open('https://wa.me/584127442672', '_blank')">WhatsApp</button>
     </div>
 </header>
@@ -116,37 +116,31 @@
         <p>Selecciona un juego para ver todos los paquetes disponibles.</p>
         <div class="swiper-container swiper-categorias">
             <div class="swiper-wrapper">
-                <!-- Botón categoría FC Mobile -->
                 <div class="swiper-slide card" data-juego-id="1" tabindex="0" role="button" aria-label="Ver paquetes FC Mobile" style="cursor:pointer;">
                     <img src="images/fc-mobile.png" alt="FC Mobile" loading="lazy" />
                     <h4>FC Mobile</h4>
                     <p>FC Points, Pase Estelar, Refuerzos diarios.</p>
                 </div>
-                <!-- Botón categoría Roblox -->
                 <div class="swiper-slide card" data-juego-id="2" tabindex="0" role="button" aria-label="Ver paquetes Roblox" style="cursor:pointer;">
                     <img src="images/roblox.png" alt="Roblox" loading="lazy" />
                     <h4>Roblox</h4>
                     <p>Robux y paquetes con bonus.</p>
                 </div>
-                <!-- Botón categoría Free Fire -->
                 <div class="swiper-slide card" data-juego-id="3" tabindex="0" role="button" aria-label="Ver paquetes Free Fire" style="cursor:pointer;">
                     <img src="images/free-fire.png" alt="Free Fire" loading="lazy" />
                     <h4>Free Fire</h4>
                     <p>Diamantes para todas las necesidades.</p>
                 </div>
-                <!-- Botón categoría Call of Duty -->
                 <div class="swiper-slide card" data-juego-id="4" tabindex="0" role="button" aria-label="Ver paquetes Call of Duty" style="cursor:pointer;">
                     <img src="images/cod.png" alt="Call of Duty" loading="lazy" />
                     <h4>Call of Duty</h4>
                     <p>CP y paquetes con bonus.</p>
                 </div>
-                <!-- Botón categoría Delta Force -->
                 <div class="swiper-slide card" data-juego-id="5" tabindex="0" role="button" aria-label="Ver paquetes Delta Force" style="cursor:pointer;">
                     <img src="images/delta-force.png" alt="Delta Force" loading="lazy" />
                     <h4>Delta Force</h4>
                     <p>Paquetes y recargas especiales.</p>
                 </div>
-                <!-- Botón categoría Tarjetas de regalo -->
                 <div class="swiper-slide card" data-juego-id="6" tabindex="0" role="button" aria-label="Ver paquetes Tarjetas de regalo" style="cursor:pointer;">
                     <img src="images/tarjetas-regalo.png" alt="Tarjetas de regalo" loading="lazy" />
                     <h4>Tarjetas de regalo</h4>
@@ -331,5 +325,17 @@
 
     cargarReseñas();
 </script>
+
+<script>
+  function actualizarContadorCarrito() {
+    const carrito = localStorage.getItem('carrito');
+    const productos = carrito ? JSON.parse(carrito) : [];
+    const totalCantidad = productos.reduce((total, item) => total + item.cantidad, 0);
+    document.getElementById('carrito-count').textContent = totalCantidad;
+  }
+
+  window.addEventListener('load', actualizarContadorCarrito);
+</script>
+
 </body>
 </html>

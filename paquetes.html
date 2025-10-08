@@ -20,20 +20,21 @@
         </p>
         <div class="hero-botones">
           <a href="index.html" class="btn-primary">Regresar</a>
-          <a href="https://wa.me/549XXXXXXXXXX" class="btn-whatsapp" target="_blank">WhatsApp</a>
+          <a href="https://wa.me/584127442672" class="btn-whatsapp" target="_blank">WhatsApp</a>
+          <a href="carrito.html" class="btn-primary" style="margin-left:10px;">Ver Carrito</a>
         </div>
         <div class="redes-sociales-titulo">Síguenos</div>
         <div class="redes-sociales">
-          <a href="https://www.tiktok.com/@recargastr" class="btn-social" target="_blank"><img src="images/tiktok.png" alt="TikTok"></a>
-          <a href="https://www.youtube.com/@recargastr" class="btn-social" target="_blank"><img src="images/youtube.png" alt="YouTube"></a>
-          <a href="https://www.kick.com/recargastr" class="btn-social" target="_blank"><img src="images/kick.png" alt="Kick"></a>
+          <a href="https://www.tiktok.com/@soyjhodagaming" class="btn-social" target="_blank"><img src="images/tiktok.png" alt="TikTok"></a>
+          <a href="https://www.youtube.com/@Soyjhoda" class="btn-social" target="_blank"><img src="images/youtube.png" alt="YouTube"></a>
+          <a href="https://kick.com/soyjhoda" class="btn-social" target="_blank"><img src="images/kick.png" alt="Kick"></a>
         </div>
       </div>
     </section>
     <h1>Paquetes para el juego</h1>
   </header>
 
-  <!-- Contenedor donde se muestran los paquetes (funcionalidad intacta) -->
+  <!-- Contenedor donde se muestran los paquetes -->
   <div class="paquetes-container" id="paquetes-container"></div>
 
   <script type="module">
@@ -42,6 +43,34 @@
     function obtenerParametro(nombre) {
       const urlParams = new URLSearchParams(window.location.search);
       return urlParams.get(nombre);
+    }
+
+    // Función para guardar carrito en localStorage
+    function guardarCarrito(carrito) {
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
+
+    // Función para obtener carrito desde localStorage
+    function obtenerCarrito() {
+      const carrito = localStorage.getItem('carrito');
+      return carrito ? JSON.parse(carrito) : [];
+    }
+
+    // Funcion para agregar producto al carrito
+    function agregarAlCarrito(paquete) {
+      let carrito = obtenerCarrito();
+
+      // Verificar si el paquete ya está en el carrito
+      const index = carrito.findIndex(item => item.id === paquete.id);
+      if (index === -1) {
+        // No existe, agregar nuevo con cantidad 1
+        carrito.push({...paquete, cantidad: 1});
+      } else {
+        // Ya existe, aumentar cantidad
+        carrito[index].cantidad += 1;
+      }
+      guardarCarrito(carrito);
+      alert('Paquete agregado al carrito.');
     }
 
     async function cargarPaquetesParaJuego(juegoId) {
@@ -75,7 +104,17 @@
           <h3>${paq.nombre}</h3>
           <p>${paq.descripcion || ''}</p>
           <div class="precio">Precio: $${paq.precio}</div>
+          <button class="btn-primary btn-agregar">Agregar al carrito</button>
         `;
+        // Evento para el botón agregar
+        card.querySelector('.btn-agregar').addEventListener('click', () => {
+          agregarAlCarrito({
+            id: paq.id,
+            nombre: paq.nombre,
+            descripcion: paq.descripcion || '',
+            precio: paq.precio
+          });
+        });
         contenedor.appendChild(card);
       });
     }
